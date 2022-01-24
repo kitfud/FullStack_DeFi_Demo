@@ -1,6 +1,7 @@
 import { useEthers } from "@usedapp/core"
 import { Button, makeStyles } from "@material-ui/core"
 
+
 const useStyles = makeStyles((theme) => ({
     container: {
         padding: theme.spacing(4),
@@ -32,6 +33,7 @@ export const Header = () => {
                     )
                 }
             </div>
+
         </div>
 
     )

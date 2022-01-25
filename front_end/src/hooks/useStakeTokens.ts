@@ -38,7 +38,7 @@ export const useStakeTokens = (tokenAddress: string) => {
             //stake function
             stakeSend(amountToStake, tokenAddress)
         }
-    }, [approveErc20State])
+    }, [approveErc20State, amountToStake, tokenAddress])
 
     //const [state, setState] = useState(approveErc20State)
     return { approveAndStake, approveErc20State }

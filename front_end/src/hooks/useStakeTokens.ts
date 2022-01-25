@@ -22,7 +22,7 @@ export const useStakeTokens = (tokenAddress: string) => {
 
     //approve 
 
-    const { send: approveErc20Send, state: approveErc20State } = useContractFunction(erc20Contract, "approve", { transactionName: "Approve ERC20 transfer" })
+    const { send: approveErc20Send, state: approveAndStakeErc20Stake } = useContractFunction(erc20Contract, "approve", { transactionName: "Approve ERC20 transfer" })
 
     const approveAndStake = (amount: string) => {
         setAmountToStake(amount)
@@ -34,14 +34,25 @@ export const useStakeTokens = (tokenAddress: string) => {
     const [amountToStake, setAmountToStake] = useState("0")
 
     useEffect(() => {
-        if (approveErc20State.status === "Success") {
+        if (approveAndStakeErc20Stake.status === "Success") {
             //stake function
             stakeSend(amountToStake, tokenAddress)
         }
-    }, [approveErc20State, amountToStake, tokenAddress])
+    }, [approveAndStakeErc20Stake, amountToStake, tokenAddress])
 
-    //const [state, setState] = useState(approveErc20State)
-    return { approveAndStake, approveErc20State }
+    const [state, setState] = useState(approveAndStakeErc20Stake)
+
+    useEffect(() => {
+        if (approveAndStakeErc20Stake.status === "Success") {
+            setState(stakeState)
+        }
+        else {
+            setState(approveAndStakeErc20Stake)
+        }
+
+    }, [approveAndStakeErc20Stake, stakeState])
+
+    return { approveAndStake, state }
     //stake tokens
 
 }
